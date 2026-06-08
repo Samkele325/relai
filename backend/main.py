@@ -256,7 +256,8 @@ def validate_analysis_payload(data: Dict[str, Any]) -> Dict[str, Any]:
 def analyze(payload: QuestionnairePayload):
     try:
         data = payload.answers or payload.questionnaire or {}
-prompt = build_analysis_prompt(data)
+
+        prompt = build_analysis_prompt(data)
         gemini_client = get_gemini_client()
 
         response = None
