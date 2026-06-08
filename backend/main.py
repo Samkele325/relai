@@ -59,7 +59,8 @@ def health():
 # Request Model
 # ---------------------------
 class QuestionnairePayload(BaseModel):
-    answers: Dict[str, Any] = Field(default_factory=dict)
+    answers: Dict[str, Any] | None = None
+    questionnaire: Dict[str, Any] | None = None
 
 
 # ---------------------------
@@ -254,7 +255,8 @@ def validate_analysis_payload(data: Dict[str, Any]) -> Dict[str, Any]:
 @app.post("/api/analyze")
 def analyze(payload: QuestionnairePayload):
     try:
-        prompt = build_analysis_prompt(payload.answers)
+        data = payload.answers or payload.questionnaire or {}
+prompt = build_analysis_prompt(data)
         gemini_client = get_gemini_client()
 
         response = None

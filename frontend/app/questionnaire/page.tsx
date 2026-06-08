@@ -337,7 +337,10 @@ const handleViewAnalysis = async () => {
       }
     );
 
-    const data = (await response.json()) as AnalysisResponse;
+    const text = await response.text();
+    console.log("RAW RESPONSE:", text);
+
+    const data = JSON.parse(text);
 
     console.log("Response status:", response.status);
     console.log("Response data:", data);
